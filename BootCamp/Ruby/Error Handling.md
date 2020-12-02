@@ -116,7 +116,7 @@ end
 
 def validate_name(name)
     name = name.strip # Trim whitespace
-    raise InvalidNameError,
+    raise InvalidNameError
     	"Name must not be empty" if name.empty?
     name
 end
