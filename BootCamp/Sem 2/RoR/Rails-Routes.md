@@ -85,3 +85,95 @@ The route tells the rails server what to display when the user just types in the
 
 The root route is specified in the config/routes.rb with the syntax:
 `root to: 'controller#action'`
+
+---
+
+# Practice
+
+- `rails g controller cafe` the `g` stands for generate. `rails generate controller cafe`
+
+#### Embedded Ruby (erb) files
+
+The syntax for referring to ruby code within an erb file is:
+
+- `<% %>` Code to execute goes within these special brackets
+- `<%= %>` The way we do string interpolation in erb
+
+**<u>refer to files in folders \controllers, views\cafe,  config\routes.rb</u>**
+
+#### routes.rb
+
+```ruby
+Rails.application.routes.draw do
+  # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
+  root to: 'cafe#index'
+  get '/home', to: 'cafe#index'
+end
+```
+
+#### cafe_controller.rb
+
+```ruby
+class CafeController < ApplicationController
+  
+  class MenuItem
+    attr_reader :name, :price
+    def initialize(name, price)
+      @name = name
+      @price = price
+    end
+  end
+
+  def index
+    @menu = [
+      MenuItem.new("latte",4.00),
+      MenuItem.new("espresso",2.50),
+      MenuItem.new("cappucino",5.00),
+      MenuItem.new("tea",2.00)
+    ]
+  end
+
+end
+```
+
+#### index.html.erb
+
+```ruby
+<h1>Welcome to Coder cafe</h1>
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Price</th>
+  </tr>
+  <% @menu.each do |item| %>
+    <tr>
+      <td> <%= item.name %> </td>
+      <td> <%= "$%.2f" % item.price %> </td>
+    </tr>
+  <% end %>
+</table>
+```
+
+#### application.html.erb
+
+```ruby
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Routing Cafe</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+
+  <body>
+    <%= yield %>
+  </body>
+</html>
+```
+
+#### 
