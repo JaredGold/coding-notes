@@ -31,6 +31,10 @@ In the routes file we are basically saying when the user sends a get request for
 
 
 
+#### Routes for one controller
+
+To get one controller's routes in terminal write `rails routes -c NAMEOFCONTROLLER`
+
 # LOST ALL NOTES DUE TO BSOD BELOW IS CODE
 
 
@@ -57,3 +61,10 @@ In the routes file we are basically saying when the user sends a get request for
 
 ```
 
+
+
+
+
+#### POSTMAN post request
+
+`localhost:3000/projects?id=3&name=portfolio app&github_status=true`
