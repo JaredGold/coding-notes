@@ -35,6 +35,14 @@ In the routes file we are basically saying when the user sends a get request for
 
 To get one controller's routes in terminal write `rails routes -c NAMEOFCONTROLLER`
 
+The prefix shows what exact path you want to follow
+
+
+
+#### Private
+
+The private keyword can but put at any point in a controller and basically says any function below it can only be used in that controller and can not be used by any other controller
+
 # LOST ALL NOTES DUE TO BSOD BELOW IS CODE
 
 
@@ -42,7 +50,14 @@ To get one controller's routes in terminal write `rails routes -c NAMEOFCONTROLL
 #### routes.rb
 
 ```ruby
-
+Rails.application.routes.draw do
+  # localhost:3000/projects
+  get "/projects", to: "projects#index"
+  # localhost:3000/projects
+  post "/projects", to: "projects#create"
+  # localhost:3000/projects/5
+  get "/projects/:id", to: "projects#show"
+end
 ```
 
 
@@ -50,6 +65,48 @@ To get one controller's routes in terminal write `rails routes -c NAMEOFCONTROLL
 #### projects_controller.rb
 
 ```ruby
+class ProjectsController < ApplicationController
+  before_action :read_projects
+  skip_before_action :verify_authenticity_token
+
+  def index
+    # send back all of the resources to the client
+    render json: @projects
+  end
+  
+  def create
+    new_project = { 
+      id: params[:id].to_i, 
+      name: params[:name], 
+      github_status: is_true?(params[:github_status]) 
+    }
+    @projects << new_project
+    write_projects(@projects)
+    redirect_to projects_path
+  end
+
+  def show
+    # show is for sending back only 1 resource
+    found_project = @projects.find do |project|
+      project["id"] == params[:id].to_i
+    end
+    render json: found_project
+  end
+
+  private
+
+  def is_true?(bool)
+    bool == "true"
+  end
+
+  def write_projects(projects)
+    File.write(Rails.public_path.join("projects.json"), JSON.generate(projects))
+  end
+
+  def read_projects
+    @projects = JSON.parse(File.read(Rails.public_path.join("projects.json")))
+  end
+end
 
 ```
 
@@ -58,7 +115,7 @@ To get one controller's routes in terminal write `rails routes -c NAMEOFCONTROLL
 #### projects.json
 
 ```ruby
-
+[{"id":1,"name":"rails project","github_status":false},{"id":2,"name":"terminal app","github_status":true},{"id":3,"name":"react app","github_status":false},{"id":4,"name":"portfolio","github_status":true},{"id":5,"name":"full stack app","github_status":false}]
 ```
 
 
