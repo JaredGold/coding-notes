@@ -176,4 +176,14 @@ end
 </html>
 ```
 
-#### 
+---
+
+# Rails Scaffolding
+
+`rails new scaffold_cafe -d postgresql`
+
+`rails g scaffold Order item:string quantity:integer` - Creates a `localhost:3000/orders` which asks for an item which is a string and an amount of it.
+
+`rails routes` shows all of the routes (GET, POST, PATCH, PUT, DELETE...)
+
+**Scaffolding is not good during training as it does all the work for you**
