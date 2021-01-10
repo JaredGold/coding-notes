@@ -71,4 +71,214 @@ to render the image we use `image_tag` this takes a path `asset_path("image.jpg"
 `<%= image_tag asset_path("cat.jpg") %>` 
 
 to change the size you can add `width:` and the size. for example:
-`<%= image_tag asset_path("cat.jpg"), width: "300px" %>`
+`<%= image_tag asset_path("cat.jpg"), width: 300 %>` or `width: "300px"`
+
+
+
+#### CSS and SASS
+
+CSS and SCSS files can be found in `app/assets/stylesheets`
+
+When you generate a controller an scss file is created with the same name.
+
+`require_tree` will require any css file in the stylesheets folder and the `require_self` will simply require itself.
+
+You can change `require_tree` to something like `require main` and create a `main.scss`
+
+
+
+# Files
+
+#### routes.rb
+
+```ruby
+Rails.application.routes.draw do
+  # http://localhost:3000/projects
+  get "/projects", to: "projects#index"
+  # http://localhost:3000/projects/new
+  get "/projects/new", to: "projects#new"
+  # http://localhost:3000/projects/1
+  get "/projects/:id", to: "projects#show", as: "project"
+end
+```
+
+
+
+#### projects_controller.rb
+
+```ruby
+class ProjectsController < ApplicationController
+  before_action :read_projects
+  
+  def index
+    # show all of the resources
+
+  end
+  
+  def show
+    # showing 1 of the resources
+
+    @project = @projects.find do |project|
+      project[:id] == params[:id].to_i
+    end
+  end
+
+  def new
+    # to have a form that allows you to create a new resource
+  end
+
+  private
+
+  def read_projects
+    @projects = [
+      {
+        id: 1,
+        name: "terminal app",
+        github_status: true,
+        date_completed: "17/08/2020"
+      },
+      {
+        id: 2,
+        name: "react app",
+        github_status: false,
+        date_completed: "20/10/2020"
+      }
+    ]
+  end
+end
+```
+
+
+
+#### application.html.erb
+
+```ruby
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>ProjectsManagementAppViews</title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+
+  <body>
+    <%= render partial: "shared/nav" %>
+    <%= yield %>
+  </body>
+</html>
+```
+
+
+
+#### index.html.erb
+
+```ruby
+<h1>Projects</h1>
+<h2>Projects list</h2>
+<%= image_tag asset_path("cat.jpg"), width: 400 %>
+<ul>
+  <% @projects.each do |project| %>
+    <%= render partial: "card", locals: {project: project} %>
+  <% end %>
+</ul>
+```
+
+
+
+#### show.html.erb
+
+```ruby
+<h1>Project</h1>
+
+<ul>
+  <li>
+    <%= link_to @project[:name], project_path(@project[:id]) %>
+    <ul>
+      <li>
+        Github Status: <%= @project[:github_status] ? "✔️" : "❌" %>
+      </li>
+      <li>
+        Date Completed: <%= @project[:date_completed] %>
+      </li>
+    </ul>
+  </li>
+</ul>
+```
+
+
+
+#### _card.html.erb
+
+```ruby
+<li class="card">
+  <%= link_to project[:name], project_path(project[:id]) %>
+  <ul>
+    <li>
+      Github Status: <%= project[:github_status] ? "✔️" : "❌" %>
+    </li>
+    <li>
+      Date Completed: <%= project[:date_completed] %>
+    </li>
+  </ul>
+</li>
+```
+
+
+
+#### _nav.html.erb
+
+```ruby
+<nav>
+  <%= link_to "Projects", projects_path %>
+  <%= link_to "New Project", projects_new_path %>
+</nav>
+```
+
+
+
+#### application.css
+
+```ruby
+/*
+ *= require main
+ *= require_self
+*/
+```
+
+
+
+#### main.scss
+
+```ruby
+@import "base/global";
+@import "components/card";
+```
+
+
+
+#### global.scss
+
+```ruby
+body {
+  font-family: sans-serif;
+}
+
+a {
+  text-decoration: none;
+  color: crimson;
+}
+```
+
+
+
+#### card.scss
+
+```ruby
+.card{
+  border: 1px solid black;
+  margin: 10px 0px;
+}
+```
