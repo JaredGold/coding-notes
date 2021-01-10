@@ -41,3 +41,17 @@ To execute ruby and display on the page we use `<%= %>`
 A `link_to` has a specific format. It looks as is `link_to TEXT, DESTINATION`
 
 In an example it could look like this `<%= link_to project[:name], project_path(project[:id]) %>`
+
+
+
+#### Partials
+
+A partial is a chunk of html that you only have to type once and then is shared among all the pages. For example a nav bar may be the perfect use of this.
+
+A partial that will be used by more than one part of the project you put in a new directory in views called `shared`
+
+To specify a file that is a partial you use an underscore before the file name. Using the nav example `_nav.html.erb`
+
+To render the partial you do so as seen here `<%= render partial: "shared/nav" %>`
+
+If you want the partial to affect the whole project you do this in the `application.html.erb` parent file in views/layouts.
