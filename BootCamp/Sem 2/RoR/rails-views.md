@@ -10,4 +10,17 @@ The convention for naming a html file in your view folder is the same name as th
 
 #### Render HTML file
 
-To render the html file you use render and then the path. e.g.  `render "projects/index"`
+- To render the html file you use render and then the path. e.g.  `render "projects/index"`
+- You can also pass a symbol if the file is stored in the correct folder `render :index`
+- Finally you can implicitly render by having the view by simply having the same corresponding name as the function. Implicit rendering is the best practice
+
+
+
+#### Naming conventions
+
+index = *show all of the resources*
+
+show = *showing 1 of the resources*
+
+new = *to have a form that allows you to create a new resource*
+
