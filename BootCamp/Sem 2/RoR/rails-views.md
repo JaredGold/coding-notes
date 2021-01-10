@@ -54,4 +54,9 @@ To specify a file that is a partial you use an underscore before the file name. 
 
 To render the partial you do so as seen here `<%= render partial: "shared/nav" %>`
 
+To render a partial in the same folder and pass information to it you do so as seen here 
+`<%= render partial: "card", locals: {project: project} %>`
+
 If you want the partial to affect the whole project you do this in the `application.html.erb` parent file in views/layouts.
+
+If you want the partial to affect only one page you create the file in the views/projects directory.
