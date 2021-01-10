@@ -60,3 +60,15 @@ To render a partial in the same folder and pass information to it you do so as s
 If you want the partial to affect the whole project you do this in the `application.html.erb` parent file in views/layouts.
 
 If you want the partial to affect only one page you create the file in the views/projects directory.
+
+
+
+#### Images/assets
+
+Images are stored in the folder `assets/images`
+
+to render the image we use `image_tag` this takes a path `asset_path("image.jpg")` for example: 
+`<%= image_tag asset_path("cat.jpg") %>` 
+
+to change the size you can add `width:` and the size. for example:
+`<%= image_tag asset_path("cat.jpg"), width: "300px" %>`
