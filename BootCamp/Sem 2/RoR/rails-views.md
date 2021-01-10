@@ -32,3 +32,12 @@ In order to run ruby commands using the erb file *(index.html.erb)* we use `<% %
 
 To execute ruby and display on the page we use `<%= %>`
 
+
+
+#### link_to
+
+`link_to` allows you to create an `<a>` to the specific item passed after.
+
+A `link_to` has a specific format. It looks as is `link_to TEXT, DESTINATION`
+
+In an example it could look like this `<%= link_to project[:name], project_path(project[:id]) %>`
