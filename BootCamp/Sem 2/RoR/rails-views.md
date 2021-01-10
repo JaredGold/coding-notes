@@ -24,3 +24,11 @@ show = *showing 1 of the resources*
 
 new = *to have a form that allows you to create a new resource*
 
+
+
+#### Running ruby in erb
+
+In order to run ruby commands using the erb file *(index.html.erb)* we use `<% %>` to execute ruby.
+
+To execute ruby and display on the page we use `<%= %>`
+
