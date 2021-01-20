@@ -133,3 +133,205 @@ User.destroy_all
 
 
 
+### Has Many Relationship
+
+#### belongs_to:
+
+* Must be singular
+* Is on the model with the foreign key
+* Associated through `author_id`
+
+#### has_many:
+
+* Naming is plural
+* One to many
+* Associated through `author_id` on Books table
+
+(THE IMAGE ABOVE BUT has_one is changed to has_many)
+
+
+
+```ruby
+a = Author.create(name:'Stephen King')
+b = Book.create(title:'it', author: a)
+a.books.create(title:'saloms lot')
+```
+
+
+
+### Has Many Through Relationship
+
+* Uses another table
+
+#### appointments
+
+* Many to Many
+* Doctor can query Patients with `patient_id`
+* Patient can query Doctor with `doctor_id`
+
+#### through:
+
+* Must be declared after has many
+* Creates a reference through another table
+
+<img src="C:\Users\New\Desktop\Coder-Academy\coding-notes\BootCamp\Sem 2\Database\img\has-many-through.JPG" alt="has-many-through" style="zoom:50%;" />
+
+```ruby
+doctor = Doctor.create(name: 'Dr Suess')
+patient_one = Patient.create(name: 'Ted')
+appoint = Appointment.create(doctor: doctor, patient: patient_one)
+
+doctor.patients.create(name:'Greg')
+```
+
+
+
+### Polymorphic Relationship
+
+#### polymorphic
+
+* Many Forms
+* Can belong to multiple models
+
+#### Reviewable
+
+* Uses `able` suffix as convention
+* as: reference the polymorphic name
+* References a row through `reviewable_id`
+* References a table through `reviewable_type`
+
+<img src="C:\Users\New\Desktop\Coder-Academy\coding-notes\BootCamp\Sem 2\Database\img\polymorphic.JPG" alt="has-many-through" style="zoom:50%;" />
+
+##### Creating a polymorphic book
+
+```ruby
+rails g model review reviewable:references{polymorphic} comment:string
+```
+
+
+
+```ruby
+b = Book.first
+b.reviews.create(comment: 'it''s pretty good')
+
+a = Author.first
+a.reviews.create(comment: 'Meh')
+
+Review.all
+pp Review.all
+```
+
+
+
+# ActiveRecord Migrations
+
+`rails db:rollback` to rollback changes from a migrations
+
+`rails generate migration AddPriceToBooks price:integer` to update the current migration (add a new column)
+
+`rails generate migration AddDetailsToBooks rating:integer description:text` it is okay to add multiple columns
+
+`rails generate migration AddAuthorRefToBooks author:references` creates a reference
+
+`rails g migration RemoveRatingFromBooks rating:integer` removes a column
+
+##### Schema
+
+Represents the current version of the rules to create a database. All changes should be done through migration and not touched.
+
+
+
+#### Change Methods
+
+* add_column
+* add_foreign_key
+* add_index
+* add_reference
+* add_timestamps
+* change_column_default (must supply a `:from` and `:to` option)
+* change_column_null
+* create_join_table
+* create_table
+* disable_extension
+* drop_join_table
+* drop_table (must supply a block)
+* enable_extension
+* remove_column (must supply a type)
+* remove_foreign_key (must supply a second table)
+* remove_index
+* remove_reference
+* remove_timestamps
+* rename_column
+* rename_index
+* rename_table
+
+
+
+# Rails Model Methods
+
+#### Validation
+
+To check a validation we open up the model and create a validation.
+
+To find the model it can be found in `app > models`
+
+Then we can create the validates method
+
+
+
+##### Below validates that a title is required
+
+```ruby
+class Book < ApplicationRecord
+   validates :title, presence: true 
+end
+```
+
+
+
+##### Below validates length
+
+```ruby
+class Book < ApplicationRecord
+   validates :title, presence: true 
+   validates :description, length: {minimum: 10, 
+       too_short: "%{cuont} is the minimum number of characters"}
+end
+```
+
+or
+
+```ruby
+class Book < ApplicationRecord
+   validates :title, presence: true 
+   validates :description, length: { in: 10..100 }
+end
+```
+
+
+
+##### Below validates numbers
+
+```ruby
+class Book < ApplicationRecord
+   validates :title, presence: true 
+   validates :description, length: { in: 10..100 }
+   validates :price, numericality: { only_integer: true }
+end
+```
+
+or
+
+```ruby
+class Book < ApplicationRecord
+   validates :title, presence: true 
+   validates :description, length: { in: 10..100 }
+   validates :price, numericality: { greater_than_or_equal_to: 0 }
+end
+```
+
+
+
+
+
+To find an error we use `name.errors.full_messages`
