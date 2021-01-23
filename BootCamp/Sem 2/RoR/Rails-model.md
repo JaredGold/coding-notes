@@ -269,13 +269,15 @@ Represents the current version of the rules to create a database. All changes sh
 
 # Rails Model Methods
 
-#### Validation
+## Validation
 
 To check a validation we open up the model and create a validation.
 
 To find the model it can be found in `app > models`
 
 Then we can create the validates method
+
+To find an error we use `name.errors.full_messages`
 
 
 
@@ -295,7 +297,7 @@ end
 class Book < ApplicationRecord
    validates :title, presence: true 
    validates :description, length: {minimum: 10, 
-       too_short: "%{cuont} is the minimum number of characters"}
+       too_short: "%{count} is the minimum number of characters"}
 end
 ```
 
@@ -332,6 +334,26 @@ end
 
 
 
+## Scopes
+
+Specify commonly used queries
+
+```ruby
+class Book < ApplicationRecord
+   validates :title, presence: true 
+   validates :description, length: { in: 10..100 }
+   validates :price, numericality: { greater_than_or_equal_to: 0 }
+   scope :bargain, -> { where(price: 0..500) }
+end
+```
 
 
-To find an error we use `name.errors.full_messages`
+
+This allows you to search for books that are cheap for example
+
+```ruby
+Book.where(price: 0..500)
+Book.bargain
+Book.where(sold:false).bargain
+```
+
