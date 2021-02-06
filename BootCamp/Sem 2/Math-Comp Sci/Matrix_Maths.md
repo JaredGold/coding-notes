@@ -1,16 +1,16 @@
 
 
+
+
 # Matrix Maths
 
 A matrix is a two dimensional array of numbers
 
 Matrixes have multiple rows and columns (2x3)
 
+To type this in code `$A\ =\ [\begin{matrix}6&4&24\\1&-9&8\end{matrix}]$`
 
-
-A=	[6 4 24]
-
-​		 [1 -9 8]
+$A\ =\ [\begin{matrix}6&4&24\\1&-9&8\end{matrix}]$
 
 A 0,0 = 6
 
@@ -66,8 +66,6 @@ You get 83 by doing $3 * 13$ + $4*8$ + $2*6$
 Transposing a matrix is done by swapping rows and columns. 
 
 $ [ [ 6 ,4 , 24], [ 1, -9, 8] ]^T$ = [[ 6, 1 ], [ 4, -9 ], [  24, 8 ]]
-
-
 
 # Example: Tshirt Sales
 
