@@ -1,4 +1,4 @@
-# Scaffolding
+# gScaffolding
 
 Scaffolding makes a lot of the key files for you running one command.
 
