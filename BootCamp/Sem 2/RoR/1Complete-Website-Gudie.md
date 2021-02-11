@@ -1,5 +1,5 @@
 # Car Sales
-1. Create a car rails project `rails new car -d --postgresql -T` Don't quote me on that
+1. Create a car rails project `rails _6.0.3_ new car -d postgresql -T` Don't quote me on that
 2. Add rails-rspec to gemfile `gem rspec-rails`
 3. Create db
 4. run `rails g rspec:install`
@@ -10,3 +10,4 @@
 - `heroku login`
 - `heroku create name`
 - `git push heroku main`
+- `heroku rake db:create`
