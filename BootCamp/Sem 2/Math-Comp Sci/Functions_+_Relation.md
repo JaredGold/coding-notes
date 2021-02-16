@@ -48,7 +48,7 @@ What is the range?
 
 ## Properties of Relations
 
-### Reflexivity
+### Reflexivity (=)
 
 **XRy iff x=y**
 
@@ -62,7 +62,7 @@ Examples:
 
 
 
-### Transitivity
+### Transitivity (< . >)
 
 **xRy, yRz => xRz**
 
