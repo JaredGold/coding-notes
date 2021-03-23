@@ -16,11 +16,11 @@ In order of complexity (from least to greatest):
 
 | **Notation** | **Name**                        |
 | ------------ | ------------------------------- |
-| O(1)         | Constant                        |
-| O(log n)     | logarithmic                     |
-| O(n)         | linear                          |
-| O(n^2)       | quadratic (or polynomial - n^n) |
-| O(2^n)       | exponential                     |
+| $O(1)$       | Constant                        |
+| $O(log n)$   | logarithmic                     |
+| $O(n)$       | linear                          |
+| $O(n^2)$     | quadratic (or polynomial - n^n) |
+| $O(2^n)$     | exponential                     |
 
 
 
