@@ -13,6 +13,9 @@ console.log(document.querySelector('.message').textContent);
 
 document.querySelector('.message').textContent = 'change';
 // this will change the class message text content to 'change'
+
+document.querySelectorAll('.message');
+// this selects all elements with class message
 ```
 
 
@@ -57,4 +60,47 @@ An event listener is a line of code that waits to hear something specific happen
 document.querySelector('.check').addEventListener('click', function(){});
 // first we select the correct class, then we add an event listener which is listening for when it is 'click'ed. After it is clicked it will run whatever function is passed.
 ```
+
+
+
+#### Class List
+
+To change and update the classes on a selected element you can do so using the `.classList` selector.
+
+```js
+const modal = document.querySelector('modal');
+
+btn.addEventListener('click', function(){
+    modal.classList.remove('hidden');
+})
+
+// removes the class hidden from the line with the .modal class.
+
+const closeModal = function () {
+  modal.classList.add('hidden');
+  overlay.classList.add('hidden');
+};
+
+// function to add classes
+```
+
+
+
+### Event Listener
+
+Adding an event listener is how we have  previously accessed an event listener on a specific tag although we can do this on the document. 
+
+```js
+document.addEventListener('keydown', function(event){
+    console.log('hello world')
+})
+
+// you could also call event `e` to make it easier
+```
+
+An event listener is also an object which allows for you to take some information from it. So in the above `keydown` whenever we press a key you could pass a variable in the function such as event to track what was passed in that event. 
+
+
+
+### `class` removal
 
