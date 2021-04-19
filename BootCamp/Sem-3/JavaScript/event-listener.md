@@ -61,3 +61,41 @@ userName.addEventListener('input', function(event) {
 })
 ```
 
+The event object passes multiple different objects. Below will show you exactly what is passed in. This is only showing what the `'click'` event is passing. There are different things passed by different events, e.g. `'keypress'`.
+
+```js
+let myButton = document.querySelector("input[type=submit]")
+
+// Must include event in the callback function parameter list to use it
+myButton.addEventListener("click", function(event) {
+    event.preventDefault()
+    console.log(event)
+})
+```
+
+You can also access the target node that the event was fired on.
+
+```js
+let myButton = document.querySelector("input[type=submit]")
+
+// Must pass event through the callback function
+myButton.addEventListener("click", function(event) {
+    event.preventDefault()
+    console.log(event.target)
+})
+```
+
+You can also then view the target attributes and values as below.
+
+```js
+let myButton = document.querySelector("input[type=submit]")
+
+// Must pass event through the callback function
+myButton.addEventListener("click", function(event) {
+    event.preventDefault()
+    event.target.value = "You clicked!"
+})
+
+// event.target.style.backgroundColor = "blue"
+```
+
