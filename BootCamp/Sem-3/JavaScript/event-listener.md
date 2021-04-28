@@ -99,3 +99,86 @@ myButton.addEventListener("click", function(event) {
 // event.target.style.backgroundColor = "blue"
 ```
 
+---
+
+### DOM Objects
+
+[Handling Events :: Eloquent JavaScript](https://eloquentjavascript.net/15_event.html)
+
+In the event handler you can use `window` to access the entire browser window. For example the below will log "You knocked?" when the browser window is clicked.
+
+```js
+window.addEventListener("click", () => {
+  console.log("You knocked?");
+});
+```
+
+#### One Time button
+
+```js
+let button = document.querySelector("button");
+function once() {
+  console.log("Done.");
+  button.removeEventListener("click", once);
+}
+button.addEventListener("click", once);
+```
+
+The above can only be pressed once as after it is clicked the event listener for click is removed.
+
+#### Event Propagation
+
+Event Propagation is that when a child element and a parent element have a click event it will first run the object clicked but then it will continue to go outward. For example a button inside of a `<p>` tag will press the button first then run the p tag code, then the body code, then the html code. This could mean a bunch of click events get pressed although unneeded. The below is a way to stop this.
+
+###### `stopPropagation()`
+
+```html
+<p>A paragraph with a <button>button</button>.</p>
+<script>
+  let para = document.querySelector("p");
+  let button = document.querySelector("button");
+  para.addEventListener("mousedown", () => {
+    console.log("Handler for paragraph.");
+  });
+  button.addEventListener("mousedown", event => {
+    console.log("Handler for button.");
+    if (event.button == 2) event.stopPropagation();
+  });
+</script>
+```
+
+#### One class for multiple buttons
+
+```html
+<button>A</button>
+<button>B</button>
+<button>C</button>
+<script>
+  document.body.addEventListener("click", event => {
+    if (event.target.nodeName == "BUTTON") {
+      console.log("Clicked", event.target.textContent);
+    }
+  });
+</script>
+```
+
+
+
+#### Keypress
+
+```html
+<p>This page turns violet when you hold the V key.</p>
+<script>
+  window.addEventListener("keydown", event => {
+    if (event.key == "v") {
+      document.body.style.background = "violet";
+    }
+  });
+  window.addEventListener("keyup", event => {
+    if (event.key == "v") {
+      document.body.style.background = "";
+    }
+  });
+</script>
+```
+
