@@ -48,9 +48,111 @@ class App extends Component { // class name is a Component
 }
 ```
 
+#### LifeCycle Methods
+
+The lifecycle method can be explained similarly to our lives. We do something the moment we are born, then we do something the moment we are teenagers and the moment we are adults and finally the moment we die. Lifecycle methods are methods that run at specific points in the apps lifetime.
+
+https://projects.wojtekmaj.pl/react-lifecycle-methods-diagram/
+
+Constructor, render, componentDidMount, componentDidUpdate, componentWillUnmount
+
+1. `componentDidMount` : runs after the first render
+   - API calls
+2. `componentDidUpdate` : this runs after subsequent renders, not the first render, provided prevState is different to the newState value
+   - If there is any repetitive tasks this would be best place (like setInterval)
+3. `componentWillUnmount` : runs towards the end of the component lifecycle
+   - Clear any background task running for this component ( like clearInterval )
 
 
 
+
+
+
+
+---
+
+## Example:
+
+```jsx
+import React, {Component} from "react"
+import Clock from "./Clock"
+
+class App extends Component {
+	constructor(props){
+		super(props)
+		this.state = {latitude:null, errorMessage: "", date: new Date()}
+	}
+
+	componentDidMount(){
+		window.navigator.geolocation.getCurrentPosition(
+			position => this.setState({latitude: position.coords.latitude}),
+			error => this.setState({errorMessage: error.message})
+		)
+	}
+
+	componentWillUnmount(){
+		clearInterval(this.timerID)
+	}
+
+	tick(){
+		this.setState({date: new Date()})
+	}
+
+	componentDidUpdate(prevState){
+		if(prevState.date !== this.state.date){
+			this.timerID = setInterval(() => this.tick(), 1000)
+		}
+	}
+
+	isItWarm(){
+		const {latitude} = this.state
+		const month = new Date().getMonth()
+
+		if(((month > 4 && month <=9 ) || latitude > 0) || ((month <= 4 || month > 9) && latitude < 0) || latitude === 0){
+			return true
+		}
+		return false
+	}
+
+	getClockIcon(){
+		if(this.isItWarm()){
+			return "summer.png"
+		}
+		return "winter.png"
+	}
+
+	render(){
+		const {latitude, errorMessage, date} = this.state
+		return(
+			<div>
+				<h1>{latitude}</h1>
+				{errorMessage || 
+					<Clock 
+						date={date} 
+						icon={latitude ? this.getClockIcon() : null}
+					/>}
+			</div>
+		)
+	}
+}
+
+export default App
+
+```
+
+
+
+
+
+
+
+#### Increment a given amount
+
+```jsx
+this.setState((state, props) => ({
+  counter: state.counter + props.increment
+}));
+```
 
 
 
@@ -66,4 +168,8 @@ window.navigator.geolocation.getCurrentPosition(
   error => console.log(error)
 )
 ```
+
+
+
+
 
