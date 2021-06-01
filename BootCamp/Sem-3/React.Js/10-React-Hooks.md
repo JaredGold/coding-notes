@@ -178,3 +178,34 @@ It is **<u>IMPORTANT</u>** to always star writing the use effect before passing 
 useEffect(() => {}, [])		// do not put anything in the curly brackets before the 
 ```
 
+
+
+```jsx
+// This one here is similar to componentDidMount
+// useEffect is taking 2 arguments (an exmpty array)
+  useEffect(() => {
+    document.title = `You've clicked ${timesClicked} times`
+  }, [])
+
+// This is similar to componentDidMount + componentDidUpdate
+// useEffect is taking 1 argument
+  useEffect(() => {
+    document.title = `You've clicked ${timesClicked} times`
+  })
+
+// This is similar to shouldComponentUpdate
+// useEffect is taking 2 arguments (an array of variables we want to check the changes)
+  useEffect(() => {
+    document.title = `You've clicked ${timesClicked} times`
+  }, [timesClicked])
+
+// This is similar to shouldComponentUpdate + componentWillUnmount
+// useEffect is taking 1 arguments, the return states if it will unmount do this.
+  useEffect(() => {
+    document.title = `You've clicked ${timesClicked} times`
+    
+    // equivalent to componentWillUnmount
+    return () => document.title = "goodbye"
+  })
+```
+
