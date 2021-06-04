@@ -22,7 +22,7 @@ First thing you must do is install the react router package using :
 `npm install react-router-dom`
 
 Then you must import the router in the App.js file :
-`import { BrowserRouter as Router, Route } from 'react-router-dom'`
+` `
 
 From there you encapsulate the components you want to have a route with a `<Router>` (meant to be `BrowserRouter`)
 
