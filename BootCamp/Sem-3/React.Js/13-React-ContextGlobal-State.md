@@ -1,5 +1,7 @@
 # React Context (global sate)
 
+https://www.youtube.com/watch?v=rFnfvhtrNbQ
+
 #### Why Context?
 
 * It gives us a way to make values accessible by any component without having to pass them as props.
@@ -92,5 +94,18 @@ export const StateContext = createContext()
 // useContext(StateContext) // used to access the global state (Below is a hook)
 
 export const useGlobalState = () => useContext(StateContext)
+```
+
+
+
+Any child inside of the `StateContext.Provider` will be able to access the values inside of `value`
+
+```jsx
+<StateContext.Provider value={{store, dispatch}}>
+	<Heading>Colour Tester</Heading>
+	<MessageField message={message} setMessage={setMessage}/>
+	<MessageCard message={message} textColour={textColour} cardColour={cardColour}/>
+	<ColourChoicePanel textColour={textColour} cardColour={cardColour} setTextColour={setTextColour} setCardColour={setCardColour}/>
+</StateContext.Provider>
 ```
 
