@@ -110,7 +110,6 @@ const {recipes} = require('../db')
 // see all
 router.get('/', (req,res) => {
   res.json(recipes);
-  res.send('ok');
 });
 
 // show
@@ -134,5 +133,54 @@ router.put('/:id', (req, res) => {
 })
     
 module.exports = router;
+```
+
+We have the ability to string multiple requests with multiple middleware. We do this using the `next` keyword. This looks as below and is described as below. This is very useful for logging.
+
+```js
+router.get('/', (req, res, next) => {	// middleware with next
+    console.log('Request received');
+    next()		// call to next runs next middleware
+  },
+  (req, res) => { // and second middleware
+    res.json(recipes);
+});
+```
+
+ We can use this for security purposes and including regular HTTP Authorizations. This can be found in the `http` MDN for headers. 
+
+```js
+router.get('/', (req, res, next) => {	// middleware with next
+    if (req.headers['authorization'] === 'Bearer 666'){ // look for auth
+        next();	// if auth next
+    } else {
+        res.status(401).end(); // else break
+    }
+  },
+  (req, res) => { // and second middleware
+    res.json(recipes);
+});
+```
+
+This if statement can become a function. After this you could use this function for almost all requests.
+
+```js
+const authorize = (req, res, next) => {
+    if (req.headers['authorization'] === 'Bearer 666'){ // look for auth
+        next();	// if auth next
+    } else {
+        res.status(401).end(); // else break
+    }
+}
+
+router.get('/', authorize, (req, res) => {
+    res.json(recipes);
+});
+```
+
+Alternitavely you can put the auth at the top of the file to work down. By using `router.use()` it will add the given middleware for everything under that.
+
+```js
+router.use(authorize);
 ```
 
