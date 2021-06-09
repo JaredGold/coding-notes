@@ -158,9 +158,9 @@ If at any point you want to go back to another page you can use history which ca
 
 ```jsx
 import {withRouter} from "react-router"
-.
+
 const EntryForm = ({addEntryToJournal, category, history}) => {
-.
+
 export default withRouter(EntryForm)
 ```
 
