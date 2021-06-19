@@ -47,3 +47,9 @@
 - [**Validation**](https://mongoosejs.com/docs/validation.html)
 - **[Populate](https://mongoosejs.com/docs/populate.html)** - use populate to access data from related models
 
+
+
+#### Challenge
+
+https://github.com/JaredGold/nodejs-masterclass-challenges?organization=JaredGold&organization=JaredGold
+
