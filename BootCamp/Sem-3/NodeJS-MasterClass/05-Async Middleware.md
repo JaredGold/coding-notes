@@ -5,8 +5,8 @@ Being able to use Async and Await for express is key when we want to add a datab
 ```js
 const Recipe = require('../db'')
 
-router.get('/', (req, res) => {
-    const recipes = Recipe.all()	// the fetch to the db
+router.get('/', async (req, res) => {	// change async function
+    const recipes = await Recipe.all()	// fetches the Recipe db and waits for all of the sync files
     res.json(recipes);
 })
 ```
@@ -31,10 +31,17 @@ const recipes = [
 ]
 
 function all() {
+    const json = JSON.parse(JSON.stringify(recipes))
     return Promise.resolve(recipes);
 }
 
+function find(id) {
+    const recipe = recipes.find(r => r.id == id);
+    return Promise.resolve(recipe)
+}
+
 // exports.recipes = recipes; //=> not async
+module.exports = {all, find}
 
 ```
 
