@@ -143,6 +143,10 @@ The reducer function will update the current state based on the `action`
 dispatch({
     type: 'setProjects',
     data: projects
+  data: {
+  id: 1,
+  modifier: 0.5
+}
 })
 ```
 
@@ -159,7 +163,6 @@ export default function reducer(state, action){
                 projects: action.data
             }
         }
-        d
     }
 }
 ```
