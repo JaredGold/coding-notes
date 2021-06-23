@@ -1,4 +1,4 @@
-# Rails API Random Jokes
+#  Rails API Random Jokes
 
 Starting this off all we need to do is create a function in our jokes_controller called random
 
