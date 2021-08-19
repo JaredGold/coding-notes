@@ -154,3 +154,97 @@ func TestNewDeck(t *testing.T) {
 }
 ```
 
+## Struct (Object)
+
+Struct is short for Data Structure. That structure can hold multiple key value pairs. This is very similar to JavaScripts Objects or Ruby's Hash. None of the previous are exactly the same as a Struct but they are extremely similar. To create a struct we first need to declare the type. We do this by using `type name struct` where name is changed to the name of the structure. It is followed by curly brackets and then the properties are passed in.
+
+```go
+type person struct{
+  firstName string
+  lastName string
+}
+```
+
+If you then want to create a person there are multiple methods. One way is as below:
+
+```go
+alex1 := person{"Alex", "Anderson"}	// 1
+alex2 := person{firstName: "Alex", lastName: "Anderson"}	// 2
+
+var alex3 person
+alex3.firstName = "Alex"
+alex3.lastName = "Anderson"
+```
+
+Although the first method works it is not safe, It is strongly reccomended you use the second approach.
+
+## Pointers
+
+A pointer is commonly used in C, C++ and other memory focused languages. It simplified is a way to point specifically to a location in the memory (RAM). Go is a pass by value language, this means that whenever we pass a value into a function go takes the value and copies all of the data into another location in memory. So when we want to modify data using a function it will simply point to a new location in memory and update the **<u>COPY</u>** that means that the original is not affected. This is why pointers are very important in go. So to create a pointer we use a `&` to say this variables memory. Alongside that if we want to access the values inside of the pointer we use `*`. If we want to update something in that memory point in a function we use the `*pointer` as the TYPE in our function.
+
+```go
+type person struct{
+  firstName string
+  lastName string
+  age int
+}
+
+func main() {
+  jared := person{
+    firstName: "Jared",
+    lastName: "Jaredstein",
+    age: 27
+  }
+  
+  jaredPointer := &jared	// this pointer directly points to the memory location of the jared struct.	
+  jaredPointer.updateName("Mike")
+  
+  func (pointerToPerson *person) updateName(newFirstName string) {		//  the type is not person but a type of pointer that points to person.
+		(*pointerToPerson).firstName = newFirstName	// pointerToPerson is wrapped in round brackets to then reference what it is pointing TO
+	}
+}
+
+```
+
+The easiest way to understand is you can turn a memory `address` into a `value` with `*address`, or turn a `value` into `address` with `&value`.
+
+The side thing to know is that if I wanted to do the same thing I don't have to use `&` and make a pointer as go will automatically turn your pointer of type person to be exactly what you need. This makes coding simpler but it is important to still use `*` with the functions.
+
+```go
+jared.updateName("Mike")
+  
+func (pointerToPerson *person) updateName(newFirstName string) {		//  the type is not person but a type of pointer that points to person.
+  (*pointerToPerson).firstName = newFirstName	// pointerToPerson is wrapped in round brackets to then reference what it is pointing TO
+}
+```
+
+### Data Types (Val vs Ref)
+
+With data types some are the data stored in memory and others are the references to the point in memory. The Value's all require pointers *(see above)* where reference types can be updated as they only change where they are refering to.
+
+| <u>Value Types</u> | <u>Reference Types</u> |
+| ------------------ | ---------------------- |
+| int                | slices                 |
+| float              | maps                   |
+| string             | channels               |
+| bool               | pointers               |
+| structs            | functions              |
+
+## Maps (Object)
+
+A map is a collection of key value pairs. It is absolutely similar to a Hash, Object or Dictionary in Ruby, Javascript and Python. With a map all keys must be of the same time and all values must be of the exact same type, this is what differentiates it to structs. There are again multiple ways to create a map. The literal way is assigning a variable the type `map` then followed with `[type]type{}` in the curly brackets we put the key value pairs, same as you would in JS.
+
+```golang
+colors := map[string]string{
+	"red": "#FF0000",
+	"green": "#4bf745",
+}
+```
+
+There are two other ways to declare and assign maps would be by assigning it to a variable like we would other vars `var colors map[string]string` or again you could use `colors := make(map[string]string)`. Of all the ways I believe the top variant is best use if the map already has things needed to be into it.
+
+To push a key value pair into a map you do so similar to other languages, you call the variable followed by square brackets holding the key and then what it equals. `colors["white"] = "#FFFFFF"`. Unlike structs you can not create a key value pair with dot point notation, this is because it is strongly typed. 
+
+If you want to delete an item from the map it is quite easy, you use the function `delete()` and inside the brackets the first argument is the variable holding the map and the second variable is the key you want to delete. `delete(colors, "white")`.
+
+To create 
