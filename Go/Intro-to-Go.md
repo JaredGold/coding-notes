@@ -178,6 +178,35 @@ alex3.lastName = "Anderson"
 
 Although the first method works it is not safe, It is strongly reccomended you use the second approach.
 
+## Maps (Object)
+
+A map is a collection of key value pairs. It is absolutely similar to a Hash, Object or Dictionary in Ruby, Javascript and Python. With a map all keys must be of the same time and all values must be of the exact same type, this is what differentiates it to structs. There are again multiple ways to create a map. The literal way is assigning a variable the type `map` then followed with `[type]type{}` in the curly brackets we put the key value pairs, same as you would in JS.
+
+```golang
+colors := map[string]string{
+	"red": "#FF0000",
+	"green": "#4bf745",
+}
+```
+
+There are two other ways to declare and assign maps would be by assigning it to a variable like we would other vars `var colors map[string]string` or again you could use `colors := make(map[string]string)`. Of all the ways I believe the top variant is best use if the map already has things needed to be into it.
+
+To push a key value pair into a map you do so similar to other languages, you call the variable followed by square brackets holding the key and then what it equals. `colors["white"] = "#FFFFFF"`. Unlike structs you can not create a key value pair with dot point notation, this is because it is strongly typed. 
+
+If you want to delete an item from the map it is quite easy, you use the function `delete()` and inside the brackets the first argument is the variable holding the map and the second variable is the key you want to delete. `delete(colors, "white")`.
+
+To create a function that uses a map is slightly different (logically) to how we create a regular function in golang. First in the type we are passing in it will always be `map[type1]type2`. If we want to then use a loop over it we can use the first variable being the `key` and the second value being the `value`. 
+
+```go
+func printMap(c map[string]string){
+	for color, hex := range c{
+		fmt.Println(color +" : "+ hex)
+	}
+}
+```
+
+
+
 ## Pointers
 
 A pointer is commonly used in C, C++ and other memory focused languages. It simplified is a way to point specifically to a location in the memory (RAM). Go is a pass by value language, this means that whenever we pass a value into a function go takes the value and copies all of the data into another location in memory. So when we want to modify data using a function it will simply point to a new location in memory and update the **<u>COPY</u>** that means that the original is not affected. This is why pointers are very important in go. So to create a pointer we use a `&` to say this variables memory. Alongside that if we want to access the values inside of the pointer we use `*`. If we want to update something in that memory point in a function we use the `*pointer` as the TYPE in our function.
@@ -230,21 +259,3 @@ With data types some are the data stored in memory and others are the references
 | bool               | pointers               |
 | structs            | functions              |
 
-## Maps (Object)
-
-A map is a collection of key value pairs. It is absolutely similar to a Hash, Object or Dictionary in Ruby, Javascript and Python. With a map all keys must be of the same time and all values must be of the exact same type, this is what differentiates it to structs. There are again multiple ways to create a map. The literal way is assigning a variable the type `map` then followed with `[type]type{}` in the curly brackets we put the key value pairs, same as you would in JS.
-
-```golang
-colors := map[string]string{
-	"red": "#FF0000",
-	"green": "#4bf745",
-}
-```
-
-There are two other ways to declare and assign maps would be by assigning it to a variable like we would other vars `var colors map[string]string` or again you could use `colors := make(map[string]string)`. Of all the ways I believe the top variant is best use if the map already has things needed to be into it.
-
-To push a key value pair into a map you do so similar to other languages, you call the variable followed by square brackets holding the key and then what it equals. `colors["white"] = "#FFFFFF"`. Unlike structs you can not create a key value pair with dot point notation, this is because it is strongly typed. 
-
-If you want to delete an item from the map it is quite easy, you use the function `delete()` and inside the brackets the first argument is the variable holding the map and the second variable is the key you want to delete. `delete(colors, "white")`.
-
-To create 
