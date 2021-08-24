@@ -319,3 +319,66 @@ func main() {
 }
 ```
 
+## Go Routines and Channels
+
+When creating code sometimes we want actions to run at the same time (synchronous), we do this using go routines, this is normally because we have something blocking us like a `Get` request. To create a new go routine all you have to do is before the function that will be blocking is called add the word `go` before it. `go checkLink(link)`. The way this works in more detail is there are sub routines created that run in parallel to the main routine, the issue with this is that if the main routine finishes before the children routines (coroutines) finish then the app simply closes. In order to fix this problem we can create a channel. A channel will communicate between all go routines, there is no other way to communicate between each routines without it.
+
+In order to create a channel we do this by following the same patterns as if we created any variable, the key with creating channels is it takes a type (`string, int, float`). So a basic channel would look like `c := make(chan string)`. Then when we want to use our channel we can pass it into functions and use it as `c chan string` in our function variables. When we want to either send or receive data through a channel we need to use special syntax. This sytnax is an arrow `<-` which points either value into channel or channel into variable or channel into function
+
+```go
+channel <- 5 // send the value 5 into the channel
+myNum <- channel // wait for a value to be sent into the channel then assign that value to myNum
+fmt.Println(<- channel) // wait for a value to be sent into the channel. When we get one log it out immediately
+```
+
+We still are not done here. When you run code and push something into channel it should near immediately exit. The reason for this is due to channels being a blocking action as well. The moment a routine finishes the main routine starts back up and if there is nothing else to run it then ends and exits the program.
+
+Below is an example of a go routine and a channel working to check if websites are currently up.
+
+```go
+package main
+
+import (
+	"fmt"
+	"net/http"
+	"time"
+)
+
+func main() {
+	links := []string {
+		"http://google.com",
+		"http://facebook.com",
+		"http://amazon.com",
+		"http://golang.org",
+		"http://stackoverflow.org",
+	}	
+
+	c := make(chan string)
+
+	for _, link := range links {
+		go checkLink(link, c)
+	}
+
+	// this is an infinite loop (!CAUTION!)
+	for link := range c {
+		go func(l string) {
+			time.Sleep(3 * time.Second)
+			checkLink(l, c)
+		}(link)
+	}
+}
+
+func checkLink(link string, c chan string) {
+	_, err := http.Get(link)
+	if err != nil {
+		// color red
+		fmt.Println("\033[31m", link, "might be down!")
+		c <- link
+		return
+	}
+	// color green
+	fmt.Println("\033[32m", link, "is up!")
+	c <- link
+}
+```
+
