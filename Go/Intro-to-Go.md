@@ -205,7 +205,7 @@ func printMap(c map[string]string){
 }
 ```
 
-
+On major difference between a map and a struct is that a struct has predefined keys where a map can add more keys after run time.
 
 ## Pointers
 
@@ -258,4 +258,64 @@ With data types some are the data stored in memory and others are the references
 | string             | channels               |
 | bool               | pointers               |
 | structs            | functions              |
+
+## Interfaces
+
+An interface is a way of creating a type that anything that can match it's criteria can be an honorary type of that. For instance if I created 2 boths that spoke english and spanish, which both had their own individual function called `getGreeting()` and that function returned a string, I could create an interface which is looking for anything with a function called `getGreeting()` and returns a string. So both the spanish both and english bot would be of that new type. This allows us to create functions which is looking for the type `bot` instead of `englishBot` and `spanishBot`. We use interfaces to define a function set. You can make it strictly require a function that returns a specific type AND/OR the argument types.
+
+```go
+type bot interface {
+	getGreeting() string
+}
+
+type englishBot struct{}
+type spanishBot struct{}
+
+func main() {
+	eb := englishBot{}
+	sb := spanishBot{}
+
+	printGreeting(eb)
+	printGreeting(sb)
+}
+
+func printGreeting(b bot) {
+	fmt.Println(b.getGreeting())
+}
+
+func (eb englishBot) getGreeting() string {
+	return "Hi There!"
+}
+
+func (sb spanishBot) getGreeting() string {
+	return "Hola!"
+}
+```
+
+Some interfaces to know and look into are Writer, Reader and Copy (in golang docs under `pkg`)
+
+```go
+package main
+
+import (
+	"fmt"
+	"io"
+	"net/http"
+	"os"
+)
+
+func main() {
+	resp, err := http.Get("https://icanhazdadjoke.com/")
+	if err != nil {
+		fmt.Println("Error:", err)
+		os.Exit(1)
+	}
+
+	io.Copy(os.Stdout, resp.Body)
+
+	// bs := make([]byte, 99999)
+	// resp.Body.Read(bs)
+	// fmt.Println(string(bs))
+}
+```
 
